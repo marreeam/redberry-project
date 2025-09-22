@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/component/ui/Input";
 import PrimaryButton from "@/component/ui/button";
 import AvatarPicker from "./component/AvatarPicker";
+import { useRegister, RegisterData } from "@/services/authService";
 
 interface RegisterFormValues {
   username: string;
@@ -16,17 +17,13 @@ const Register: React.FC = () => {
   const { register, handleSubmit } = useForm<RegisterFormValues>();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
-  const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
-    const formData = new FormData();
-    formData.append("username", data.username);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("password_confirmation", data.password_confirmation);
+  const registerMutation = useRegister(
+    (data) => console.log("Registration successful:", data),
+    (err) => console.error("Registration failed:", err)
+  );
 
-    if (avatarFile) {
-      formData.append("avatar", avatarFile); 
-    }
-    
+  const onSubmit: SubmitHandler<RegisterFormValues> = (data) => {
+    registerMutation.mutate({ ...data, avatar: avatarFile || undefined });
   };
 
   return (
@@ -43,7 +40,28 @@ const Register: React.FC = () => {
         type="password"
       />
 
-      <PrimaryButton text="Register" />
+{registerMutation.isLoading && <p>Registering...</p>}
+{registerMutation.isError && (
+  <p className="text-red-500 text-sm">
+    {(registerMutation.error as any)?.response?.data?.message || "Registration failed"}
+  </p>
+)}
+{registerMutation.isSuccess && (
+  <p className="text-green-600 text-sm">Registration successful!</p>
+)}
+
+
+<PrimaryButton text={registerMutation.isLoading ? "Registering..." : "Register"} />
+{registerMutation.isLoading && <p>Registering...</p>}
+{registerMutation.isError && (
+  <p className="text-red-500 text-sm">
+    {(registerMutation.error as any)?.response?.data?.message || "Registration failed"}
+  </p>
+)}
+{registerMutation.isSuccess && <p className="text-green-600 text-sm">Registration successful!</p>}
+
+
+
     </form>
   );
 };
