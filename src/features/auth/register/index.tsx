@@ -42,7 +42,7 @@ const Register: React.FC = () => {
         >
           <AvatarPicker onChange={(_, file) => setAvatarFile(file)} />
 
-          <Input {...register("username")}   placeholderText="Password" required />
+          <Input {...register("username")}   placeholderText="Username" required />
           <Input {...register("email")} placeholderText="Email" required />
           <Input {...register("password")} placeholderText="Password" required type="password" />
           <Input {...register("password_confirmation")} placeholderText="Confirm password" required type="password"/>

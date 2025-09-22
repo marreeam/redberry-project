@@ -49,7 +49,7 @@ const Input: React.FC<InputProps> = ({
             onClick={() => setShowPassword(!showPassword)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
           >
-            {showPassword ? <img src="/img/eye.png"  /> : <img src="/img/eye.png"  />}
+            {showPassword ? <img src="/img/eye.png" alt="Show password" /> : <img src="/img/eye.png"  alt="Show password"  />}
           </button>
         )}
       </div>

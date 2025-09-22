@@ -38,13 +38,13 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onChange }) => {
   return (
     <div className="flex items-center gap-4">
       <div
-        className="w-16 h-16 rounded-full border border-gray-300 flex items-center justify-center cursor-pointer overflow-hidden bg-gray-50"
+        className="w-[100px] h-[100px] rounded-full border border-gray-300 flex items-center justify-center cursor-pointer overflow-hidden bg-gray-50"
         onClick={handleChooseClick}
       >
         {avatar ? (
           <img src={avatar} alt="Avatar" className="object-cover w-full h-full" />
         ) : (
-          <ImageIcon className="w-6 h-6 text-gray-400" />
+          <img src="/svg/camera.svg" className="w-6 h-6 text-gray-400"  alt="Unpload avatar"/>
         )}
       </div>
 
@@ -52,15 +52,15 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onChange }) => {
         <button
           type="button"
           onClick={handleChooseClick}
-          className="text-blue-600 hover:underline text-sm"
+          className="font-normal text-[14px] leading-[100%] tracking-[0%] text-center"
         >
-          Choose Picture
+          Upload new
         </button>
         {avatar && (
           <button
             type="button"
             onClick={handleRemove}
-            className="text-red-500 hover:underline text-sm flex items-center gap-1"
+            className="font-normal text-[14px] leading-[100%] tracking-[0%] text-center"
           >
             <X className="w-3 h-3" /> Remove
           </button>
