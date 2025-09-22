@@ -16,7 +16,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onChange }) => {
       reader.onload = () => {
         const result = reader.result as string;
         setAvatar(result);
-        onChange?.(result, file);
+        onChange?.(result, file); 
       };
       reader.readAsDataURL(file);
     }
