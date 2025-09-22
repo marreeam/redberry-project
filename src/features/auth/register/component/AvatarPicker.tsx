@@ -48,11 +48,11 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onChange }) => {
         )}
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex  gap-3.5">
         <button
           type="button"
           onClick={handleChooseClick}
-          className="font-normal text-[14px] leading-[100%] tracking-[0%] text-center"
+          className="font-normal text-[#3E424A] text-[14px] leading-[100%] tracking-[0%] text-center"
         >
           Upload new
         </button>
@@ -60,9 +60,9 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onChange }) => {
           <button
             type="button"
             onClick={handleRemove}
-            className="font-normal text-[14px] leading-[100%] tracking-[0%] text-center"
+            className="font-normal text-[#3E424A] text-[14px] leading-[100%] tracking-[0%] text-center"
           >
-            <X className="w-3 h-3" /> Remove
+             Remove
           </button>
         )}
       </div>

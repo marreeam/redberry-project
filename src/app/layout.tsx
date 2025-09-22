@@ -3,6 +3,7 @@ import './globals.css';
 import { Poppins } from 'next/font/google';
 
 import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
+import Header from '@/component/shared/header';
 const queryClient = new QueryClient();
 
 
@@ -17,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={poppins.className}>
         <QueryClientProvider client={queryClient}>
-
+         <Header/>
           {children}
         </QueryClientProvider>
       </body>
