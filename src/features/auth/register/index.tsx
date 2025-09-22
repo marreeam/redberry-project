@@ -27,42 +27,40 @@ const Register: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <AvatarPicker onChange={(_, file) => setAvatarFile(file)} />
+    <div className="flex items-center gap-x-44">
+      <img src="/svg/login-registration.svg" alt="Registration Illustration" className="hidden md:block" />
 
-      <Input {...register("username")} placeholder="Username" required />
-      <Input {...register("email")} placeholder="Email" required />
-      <Input {...register("password")} placeholder="Password" required type="password" />
-      <Input
-        {...register("password_confirmation")}
-        placeholder="Confirm password"
-        required
-        type="password"
-      />
+      <div className="flex flex-col gap-12">
+        <h1 className="text-[#10151F] font-semibold text-[42px] leading-[100%] tracking-[0%]">
+          Registration
+        </h1>
 
-{registerMutation.isLoading && <p>Registering...</p>}
-{registerMutation.isError && (
-  <p className="text-red-500 text-sm">
-    {(registerMutation.error as any)?.response?.data?.message || "Registration failed"}
-  </p>
-)}
-{registerMutation.isSuccess && (
-  <p className="text-green-600 text-sm">Registration successful!</p>
-)}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          encType="multipart/form-data"
+          className="flex flex-col gap-6"
+        >
+          <AvatarPicker onChange={(_, file) => setAvatarFile(file)} />
 
+          <Input {...register("username")}   placeholderText="Password" required />
+          <Input {...register("email")} placeholderText="Email" required />
+          <Input {...register("password")} placeholderText="Password" required type="password" />
+          <Input {...register("password_confirmation")} placeholderText="Confirm password" required type="password"/>
 
-<PrimaryButton text={registerMutation.isLoading ? "Registering..." : "Register"} />
-{registerMutation.isLoading && <p>Registering...</p>}
-{registerMutation.isError && (
-  <p className="text-red-500 text-sm">
-    {(registerMutation.error as any)?.response?.data?.message || "Registration failed"}
-  </p>
-)}
-{registerMutation.isSuccess && <p className="text-green-600 text-sm">Registration successful!</p>}
+          {registerMutation.isLoading && <p>Registering...</p>}
+          {registerMutation.isError && (
+            <p className="text-red-500 text-sm">
+              {(registerMutation.error as any)?.response?.data?.message || "Registration failed"}
+            </p>
+          )}
+          {registerMutation.isSuccess && (
+            <p className="text-green-600 text-sm">Registration successful!</p>
+          )}
 
-
-
-    </form>
+          <PrimaryButton text={registerMutation.isLoading ? "Registering..." : "Register"} />
+        </form>
+      </div>
+    </div>
   );
 };
 
