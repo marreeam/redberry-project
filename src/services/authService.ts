@@ -5,17 +5,38 @@ import api from "./api";
 export interface LoginData {
     email: string;
     password: string;
+
+  }
+
+  export interface LoginResponse {
+    user: {
+      id: number;
+      username: string;
+      email: string;
+      avatar?: string;  
+    };
+    token: string;
   }
   
-  export const useLogin = (onSuccess?: (data: any) => void, onError?: (error: any) => void) => {
-    return useMutationApi<LoginData, LoginData>({
+  export const useLogin = (
+    onSuccess?: () => void,
+    onError?: (error: any) => void
+  ) => {
+    return useMutationApi<LoginResponse, LoginData>({
       url: "/login",
       method: "post",
-      onSuccess,
+      onSuccess: (data: LoginResponse) => {
+        localStorage.setItem("currentUserToken", data.token);
+        localStorage.setItem("currentUser", JSON.stringify(data.user));
+        if (data.user.avatar) localStorage.setItem("currentUserAvatar", data.user.avatar);
+      
+        if (onSuccess) onSuccess();
+      },
       onError,
     });
   };
   
+
 
 
   export interface RegisterData {

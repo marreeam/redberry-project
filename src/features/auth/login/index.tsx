@@ -9,14 +9,18 @@ import { useLogin } from "@/services/authService";
 interface LoginFormValues {
   email: string;
   password: string;
+  
 }
+
+const USER_KEY = "currentUserAvatar"; 
 
 const Login: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
 
   const loginMutation = useLogin(
-    (data) => console.log("Login successful:", data),
-    (err) => console.error("Login failed:", err)
+    (data) =>{window.location.href="/"; console.log("SUCCESS", data) },
+
+    (err) => console.error("ERROR", err)
   );
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {

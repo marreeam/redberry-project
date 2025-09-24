@@ -1,16 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useCurrentUser } from "@/hook/useCurrentUser";
+
 
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname(); 
-  const [avatar, setAvatar] = useState<string | null>(null); 
   const isHomePage = pathname === "/";
   const isRegisterPage = pathname === "/register";
   const isLoginPage = pathname === "/login";
+  const { data: user } = useCurrentUser();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return null; 
   const handleProfileClick = () => {
     console.log("Profile clicked");
   };
@@ -44,9 +51,9 @@ const Header = () => {
               className="w-10 h-10 rounded-full cursor-pointer overflow-hidden"
               onClick={handleProfileClick}
             >
-              {avatar ? (
+{mounted && user?.avatar ? (
                 <img
-                  src={avatar}
+                  src={user.avatar}
                   alt="User Avatar"
                   className="w-full h-full object-cover"
                 />
