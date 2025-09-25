@@ -1,16 +1,16 @@
+// ProductsPage.tsx
 "use client";
 
 import React, { useState } from "react";
 import { useProducts } from "@/hook/product/useProducts";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import SortByFilter from "@/component/sortByFilter";
-
+import SortByFilter, { SortOption } from "@/component/sortByFilter";
+import Loading from "@/component/ui/loading";
 
 const ProductsPage = () => {
   const [page, setPage] = useState(1);
   const [priceFrom, setPriceFrom] = useState<number | undefined>();
   const [priceTo, setPriceTo] = useState<number | undefined>();
-  const [sort, setSort] = useState<string>("price");
+  const [sort, setSort] = useState<string>("");
   const [showFilter, setShowFilter] = useState(false);
 
   const { data, isLoading, isError } = useProducts({
@@ -20,7 +20,7 @@ const ProductsPage = () => {
     sort,
   });
 
-  if (isLoading) return <p>Loading products...</p>;
+  if (isLoading) return <Loading/>;
   if (isError) return <p>Error loading products</p>;
 
   const products = data?.data || [];
@@ -29,24 +29,24 @@ const ProductsPage = () => {
   const startIndex = (current_page - 1) * per_page + 1;
   const endIndex = Math.min(current_page * per_page, total);
 
+  const sortOptions: SortOption[] = [
 
-
-  const sortOptions = [
-    { label: "Sort By", value: "price" },
     { label: "New Products First", value: "created_at" },
-    { label: "Price Low → High", value: "price" },
-    { label: "Price High → Low", value: "-price" },
+    { label: "Price, low to high", value: "price" },
+    { label: "Price, high to low", value: "-price" },
   ];
+
   const handleSortChange = (value: string) => {
     setSort(value);
     setPage(1);
   };
-  
+
   const handleFilterApply = (from?: number, to?: number) => {
     setPriceFrom(from);
     setPriceTo(to);
     setPage(1);
   };
+
   return (
     <div className="pr-[100px] pl-[100px] pt-[72px]">
       <div className="flex justify-between mb-8">
@@ -59,7 +59,6 @@ const ProductsPage = () => {
             Showing {startIndex}–{endIndex} of {total} results
           </p>
 
-
           <button
             onClick={() => setShowFilter(true)}
             className="flex items-center gap-2 font-normal text-[16px] leading-[100%] tracking-[0%]"
@@ -68,12 +67,12 @@ const ProductsPage = () => {
             Filter
           </button>
 
-
           <div className="flex gap-2 items-center">
-          <SortByFilter
-  selected={sortOptions.find(o => o.value === sort)}
-  onChange={handleSortChange}
-/>
+            <SortByFilter
+              selected={sortOptions.find(o => o.value === sort)}
+              options={sortOptions}
+              onChange={handleSortChange}
+            />
           </div>
         </div>
       </div>
@@ -98,7 +97,7 @@ const ProductsPage = () => {
 
       <div className="flex justify-center items-center gap-4 mt-6">
         <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          onClick={() => setPage(prev => Math.max(prev - 1, 1))}
           disabled={current_page === 1}
           className="px-3 py-1 border rounded disabled:opacity-50"
         >
@@ -110,7 +109,7 @@ const ProductsPage = () => {
         </span>
 
         <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, last_page))}
+          onClick={() => setPage(prev => Math.min(prev + 1, last_page))}
           disabled={current_page === last_page}
           className="px-3 py-1 border rounded disabled:opacity-50"
         >
