@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 interface Product {
   id: string | number;
@@ -16,8 +17,8 @@ interface ProductsListProps {
 const ProductsList = ({ products }: ProductsListProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {products.map(product => (
-        <div key={product.id} className="flex flex-col gap-3">
+      {products.map((product) => (
+        <Link key={product.id} href={`/product/${product.id}`} className="flex flex-col gap-3 cursor-pointer">
           <img
             src={product.cover_image}
             alt={product.name}
@@ -29,7 +30,7 @@ const ProductsList = ({ products }: ProductsListProps) => {
           <p className="font-medium text-[18px] leading-[100%] tracking-[0%]">
             ${product.price}
           </p>
-        </div>
+        </Link>
       ))}
     </div>
   );
