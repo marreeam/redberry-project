@@ -22,10 +22,10 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   const quantityOptions = Array.from({ length: maxQuantity }, (_, i) => i + 1);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col  gap-4">
       <label
         htmlFor="quantity-select"
-        className="font-medium text-[14px] text-gray-700"
+        className="text-poppins-normal-16"
       >
         Quantity:
       </label>
@@ -34,7 +34,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
         disabled={maxQuantity <= 0}
         value={quantity}
         onChange={(e) => onSetQuantity(Number(e.target.value))}
-        className="border border-gray-300 rounded-md p-2 w-20 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+        className="border border-gray-300 rounded-[10px] px-4 py-[9px] w-[70px] focus:outline-none "
       >
         {quantityOptions.map((num) => (
           <option key={num} value={num}>

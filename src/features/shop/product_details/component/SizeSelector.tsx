@@ -18,7 +18,7 @@ const SizeSelector: React.FC<SizeSelectorProps> = ({
         {availableSizes.map((size) => (
           <span
             key={size}
-            className={`px-[16px] py-[9px] w-[70px] text-center border rounded-md text-poppins-normal-16 cursor-pointer transition-colors duration-200 ${
+            className={`px-[16px] py-[9px] w-[70px] text-center border rounded-[10px] text-poppins-normal-16 cursor-pointer transition-colors duration-200 ${
               selectedSize === size
                 ? "border-[#10151F] text-[#10151F] "
                 : "border-[#E1DFE1] hover:bg-gray-100"
