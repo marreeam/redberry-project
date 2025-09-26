@@ -7,6 +7,6 @@ interface UseProductOptions {
 
 export const useProduct = ({ id }: UseProductOptions) => {
   return useQueryApi<Product>({
-    url: `/products/${id}`,
+    url: `/products/${id}`
   });
 };
