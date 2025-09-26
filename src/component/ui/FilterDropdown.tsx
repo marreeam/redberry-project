@@ -19,7 +19,7 @@ const FilterDropdown = ({ priceFrom, priceTo, onApply }: FilterDropdownProps) =>
     <Popover className="relative">
   {({ open }: { open: boolean }) => (
         <>
-          <PopoverButton className="flex items-center gap-2 font-normal text-[16px] leading-[100%] tracking-[0%]">
+          <PopoverButton className="flex items-center gap-2  .text-poppins-normal-16">
             <img src="/svg/filter.svg" alt="Filter icon" width={24} height={24} />
             Filter
           </PopoverButton>
@@ -36,7 +36,7 @@ const FilterDropdown = ({ priceFrom, priceTo, onApply }: FilterDropdownProps) =>
             <PopoverPanel className="absolute z-10 mt-2 w-[392px] right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
 
               <div className="flex flex-col gap-5 pt-2.5">
-            <label className="font-semibold text-[16px] leading-[16px] tracking-[0] ">Select price</label>
+            <label className=" .text-poppins-semibold-16 ">Select price</label>
               <div className="flex flex-col gap-2.5 items-end">
           
           <div className="flex gap-2.5">

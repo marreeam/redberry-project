@@ -35,7 +35,7 @@ const ProductsPage = () => {
   return (
     <div className="pr-[100px] pl-[100px] pt-[72px]">
       <div className="flex justify-between mb-8">
-        <h1 className="font-semibold text-[42px] leading-[100%] tracking-[0%]">Products</h1>
+        <h1 className="text-poppins-semibold-42">Products</h1>
 
         <div className="flex gap-8 justify-center items-center">
           <p className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#3E424A]">

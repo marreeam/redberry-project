@@ -31,7 +31,7 @@ const Register: React.FC = () => {
       <img src="/svg/login-registration.svg" alt="Registration Illustration" className="hidden md:block" />
 
       <div className="flex flex-col gap-12">
-        <h1 className="text-[#10151F] font-semibold text-[42px] leading-[100%] tracking-[0%]">
+        <h1 className="text-[#10151F] .text-poppins-semibold-42">
           Registration
         </h1>
 

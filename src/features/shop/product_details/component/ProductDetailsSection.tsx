@@ -28,10 +28,10 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-5 p-4 w-[704px]">
-      <h1 className="text-[32px] font-bold text-gray-900 leading-tight">
+      <h1 className="text-poppins-semibold-32">
         {product.name}
       </h1>
-      <p className="text-[28px] font-semibold text-orange-600">
+      <p className="text-poppins-semibold-32 ">
         ${product.price}
       </p>
 
