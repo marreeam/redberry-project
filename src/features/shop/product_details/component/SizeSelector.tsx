@@ -12,16 +12,16 @@ const SizeSelector: React.FC<SizeSelectorProps> = ({
   onSelectSize,
 }) => {
   return (
-    <div>
-      <p className="font-medium text-[14px]">Available Sizes:</p>
+    <div className='flex flex-col gap-4'>
+      <p className="text-poppins-normal-16 text-[#10151F]">Size: <span>{selectedSize}</span></p>
       <div className="flex gap-2 mt-1">
         {availableSizes.map((size) => (
           <span
             key={size}
-            className={`px-3 py-2 border rounded-md text-[14px] cursor-pointer transition-colors duration-200 ${
+            className={`px-[16px] py-[9px] w-[70px] text-center border rounded-md text-poppins-normal-16 cursor-pointer transition-colors duration-200 ${
               selectedSize === size
-                ? "border-orange-500 text-orange-500 bg-orange-50"
-                : "border-gray-300 hover:bg-gray-100"
+                ? "border-[#10151F] text-[#10151F] "
+                : "border-[#E1DFE1] hover:bg-gray-100"
             }`}
             onClick={() => onSelectSize(size)}
           >
