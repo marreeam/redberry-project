@@ -27,7 +27,7 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
   onAddToCart,
 }) => {
   return (
-    <div className="flex flex-col gap-5 p-4">
+    <div className="flex flex-col gap-5 p-4 w-[704px]">
       <h1 className="text-[32px] font-bold text-gray-900 leading-tight">
         {product.name}
       </h1>

@@ -70,25 +70,26 @@ const ProductDetailPage = () => {
 
   return (
     <div className="pr-[100px] pl-[100px] pt-[72px] flex gap-8">
-      <div className="flex flex-col gap-4">
-        <img
-          src={selectedImage || currentProduct.cover_image}
-          alt={currentProduct.name}
-          className="w-[400px] h-[400px] object-contain rounded-[10px]"
-        />
-        <div className="flex gap-2">
+      <div className="flex  gap-4">
+      <div className="flex flex-col gap-2">
           {currentProduct.images.map((img, idx) => (
             <img
               key={idx}
               src={img}
               alt={currentProduct.name}
-              className={`w-16 h-16 object-contain rounded cursor-pointer border ${
+              className={`w-[121px] h-[161px] object-contain rounded cursor-pointer border ${
                 selectedImage === img ? "border-orange-500" : "border-gray-200"
               }`}
               onClick={() => setSelectedImage(img)}
             />
           ))}
         </div>
+        <img
+          src={selectedImage || currentProduct.cover_image}
+          alt={currentProduct.name}
+          className="w-[703px] h-[837px] object-contain rounded-[10px]"
+        />
+       
       </div>
 
       <ProductDetailsSection

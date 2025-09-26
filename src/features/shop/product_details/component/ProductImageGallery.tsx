@@ -21,7 +21,7 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
             key={img}
             src={img}
             alt={`${productName} thumbnail`}
-            className={`w-20 h-[161px] object-cover rounded cursor-pointer border-2 transition-all duration-200 ${
+            className={`w-[121px] h-[161px] object-cover rounded cursor-pointer border-2 transition-all duration-200 ${
               selectedImage === img ? "border-orange-500 scale-105" : "border-gray-200 hover:border-gray-400"
             }`}
             onClick={() => onSelectImage(img)}
