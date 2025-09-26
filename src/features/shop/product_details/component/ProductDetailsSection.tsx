@@ -28,12 +28,49 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-5 p-4 w-[704px]">
+      <div className="flex flex-col gap-[21px]">
       <h1 className="text-poppins-semibold-32">
         {product.name}
       </h1>
       <p className="text-poppins-semibold-32 ">
         ${product.price}
       </p>
+      </div>
+   
+
+
+      <div className="flex flex-col gap-12 mt-4">
+        <ColorSelector
+          availableColors={product.available_colors}
+          selectedColor={selectedColor}
+          onSelectColor={onSelectColor}
+        />
+        <SizeSelector
+          availableSizes={product.available_sizes}
+          selectedSize={selectedSize}
+          onSelectSize={onSelectSize}
+        />
+           <QuantitySelector
+        quantity={quantity}
+        onSetQuantity={onSetQuantity}
+        maxQuantity={product.quantity}
+      />
+      </div>
+
+   
+
+
+      <PrimaryButton
+        onClick={onAddToCart}
+        className="mt-6 w-full max-w-xs"
+        disabled={!selectedColor || !selectedSize || product.quantity <= 0}
+      >
+        {product.quantity <= 0
+          ? "Out of stock"
+          : !selectedColor || !selectedSize
+          ? "Select options"
+          : "Add to Cart"}
+      </PrimaryButton>
 
       {product.description && (
         <p className="text-[16px] text-gray-700">{product.description}</p>
@@ -53,51 +90,6 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
           />
         )}
       </div>
-
-
-      <div className="flex flex-col gap-4 mt-4">
-        <ColorSelector
-          availableColors={product.available_colors}
-          selectedColor={selectedColor}
-          onSelectColor={onSelectColor}
-        />
-        <SizeSelector
-          availableSizes={product.available_sizes}
-          selectedSize={selectedSize}
-          onSelectSize={onSelectSize}
-        />
-      </div>
-
-      <QuantitySelector
-        quantity={quantity}
-        onSetQuantity={onSetQuantity}
-        maxQuantity={product.quantity}
-      />
-
-
-      <PrimaryButton
-        onClick={onAddToCart}
-        className="mt-6 w-full max-w-xs"
-        disabled={!selectedColor || !selectedSize || product.quantity <= 0}
-      >
-        {product.quantity <= 0
-          ? "Out of stock"
-          : !selectedColor || !selectedSize
-          ? "Select options"
-          : "Add to Cart"}
-      </PrimaryButton>
-
-      {product.release_year && (
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <h3 className="text-[20px] font-semibold mb-3">Product Details</h3>
-          <ul className="list-disc list-inside text-gray-600">
-            <li>Release year: {product.release_year}</li>
-            <li>Material: High quality cotton blend</li>
-            <li>Care: Machine washable</li>
-            <li>Origin: Made in Italy</li>
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
