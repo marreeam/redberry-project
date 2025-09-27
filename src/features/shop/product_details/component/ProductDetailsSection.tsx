@@ -27,7 +27,7 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
   onAddToCart,
 }) => {
   return (
-    <div className="flex flex-col gap-5 p-4 w-[704px]">
+    <div className="flex flex-col gap-[56px] p-4 w-[704px]">
       <div className="flex flex-col gap-[21px]">
       <h1 className="text-poppins-semibold-32">
         {product.name}
@@ -63,17 +63,12 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
       <PrimaryButton
       text="Add to cart"
         onClick={onAddToCart}
-        className="mt-6 w-full max-w-xs"
-        disabled={!selectedColor || !selectedSize || product.quantity <= 0}
+        disabled={!selectedColor || !selectedSize}
       >
-        {product.quantity <= 0
-          ? "Out of stock"
-          : !selectedColor || !selectedSize
-          ? "Select options"
-          : "Add to Cart"}
+       
       </PrimaryButton>
 
-<hr className="mt-[59px] mb-[59px] text-[#E1DFE1]"/>
+<hr className="text-[#E1DFE1]"/>
 
 <div className="flex flex-col gap-[17px] ">
   <div className="flex justify-between">

@@ -1,19 +1,26 @@
-import React from 'react';
+import React from "react";
+import clsx from "clsx";
 
-interface PrimaryButtonProps {
-  text: string;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
+interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  text?: string; 
+  className?: string;
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ text, onClick, type = "submit" }) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+  text,
+  children,
+  className,
+  ...props
+}) => {
   return (
     <button
-      type={type}
-      onClick={onClick}
-      className="bg-[#FF4000] text-white p-2 w-full rounded-[10px] hover:bg-[#e63a00] transition"
+      {...props}
+      className={clsx(
+        "bg-[#FF4000] text-white p-2 w-full rounded-[10px] hover:bg-[#e63a00] transition disabled:opacity-50 disabled:cursor-not-allowed",
+        className
+      )}
     >
-      {text}
+      {text || children}
     </button>
   );
 };
