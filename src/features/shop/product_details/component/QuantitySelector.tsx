@@ -9,32 +9,20 @@ interface QuantitySelectorProps {
 const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   quantity,
   onSetQuantity,
-  maxQuantity,
+  maxQuantity = 20, 
 }) => {
-  if (maxQuantity <= 0) {
-    return (
-      <p className="text-red-500 font-medium text-sm">
-        Out of stock
-      </p>
-    );
-  }
-
   const quantityOptions = Array.from({ length: maxQuantity }, (_, i) => i + 1);
 
   return (
-    <div className="flex flex-col  gap-4">
-      <label
-        htmlFor="quantity-select"
-        className="text-poppins-normal-16"
-      >
+    <div className="flex flex-col gap-4">
+      <label htmlFor="quantity-select" className="text-poppins-normal-16">
         Quantity:
       </label>
       <select
         id="quantity-select"
-        disabled={maxQuantity <= 0}
         value={quantity}
         onChange={(e) => onSetQuantity(Number(e.target.value))}
-        className="border border-gray-300 rounded-[10px] px-4 py-[9px] w-[70px] focus:outline-none "
+        className="border border-gray-300 rounded-[10px] px-4 py-[9px] w-[70px] focus:outline-none"
       >
         {quantityOptions.map((num) => (
           <option key={num} value={num}>

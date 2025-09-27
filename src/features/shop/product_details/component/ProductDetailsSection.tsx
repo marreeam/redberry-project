@@ -53,7 +53,7 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
            <QuantitySelector
         quantity={quantity}
         onSetQuantity={onSetQuantity}
-        maxQuantity={product.quantity}
+        maxQuantity={10}
       />
       </div>
 
@@ -96,7 +96,7 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
         </span>
         </div>
         {product.description && (
-        <p className="text-poppins-normal-16">{product.description}</p>
+        <p className="font-normal text-[16px] leading-[150%]">{product.description}</p>
       )}
       </div>
     
