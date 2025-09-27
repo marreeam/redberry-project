@@ -61,6 +61,7 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
 
 
       <PrimaryButton
+      text="Add to cart"
         onClick={onAddToCart}
         className="mt-6 w-full max-w-xs"
         disabled={!selectedColor || !selectedSize || product.quantity <= 0}
@@ -72,24 +73,35 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
           : "Add to Cart"}
       </PrimaryButton>
 
-      {product.description && (
-        <p className="text-[16px] text-gray-700">{product.description}</p>
-      )}
+<hr className="mt-[59px] mb-[59px] text-[#E1DFE1]"/>
 
-
-      <div className="flex items-center gap-2 text-[14px] text-gray-500">
-        <p className="font-medium">Brand:</p>
-        <span className="font-semibold text-gray-700">
-          {product.brand.name}
-        </span>
-        {product.brand.image && (
+<div className="flex flex-col gap-[17px] ">
+  <div className="flex justify-between">
+  <h3 className="text-popins-20">Details</h3>
+  {product.brand.image && (
           <img
             src={product.brand.image}
             alt={product.brand.name}
             className="h-6 w-auto ml-2 object-contain"
           />
         )}
+
+  </div>
+
+  <div className="flex flex-col  gap-[19px] text-[14px] text-[#3E424A]">
+    <div className="flex gap-2">
+        <p className="text-poppins-normal-16">Brand:</p>
+        <span className="text-poppins-normal-16">
+          {product.brand.name}
+        </span>
+        </div>
+        {product.description && (
+        <p className="text-poppins-normal-16">{product.description}</p>
+      )}
       </div>
+    
+   
+    </div>
     </div>
   );
 };

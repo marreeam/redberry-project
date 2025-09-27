@@ -16,3 +16,6 @@
   .text-poppins-semibold-42{
     @apply  font-semibold text-[42px] leading-[100%] tracking-[0%]
 ;  }
+.text-popins-20{
+  @apply font-medium text-[20px] leading-[100%] tracking-[0];
+}
