@@ -7,12 +7,12 @@ interface CheckoutPayload {
 }
 
 export const useCheckout = () => {
-  const { mutate, isLoading, error } = useMutationApi({
+  const { mutate, isPending, error } = useMutationApi({
     url: "/checkout",
     method: "post",
   });
 
   const checkout = (payload: CheckoutPayload) => mutate(payload);
 
-  return { checkout, loading: isLoading, error };
+  return { checkout, loading: isPending, error };
 };

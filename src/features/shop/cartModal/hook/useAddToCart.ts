@@ -9,7 +9,7 @@ interface AddToCartPayload {
 }
 
 export const useAddToCart = (productId: number | string) => {
-  const { mutate, isLoading, error } = useMutationApi({
+  const { mutate, isPending , error } = useMutationApi({
     url: `/cart/products/${productId}`,
     method: "post",
   });
@@ -18,5 +18,5 @@ export const useAddToCart = (productId: number | string) => {
     return mutate(payload);
   };
 
-  return { addToCart, loading: isLoading, error };
+  return { addToCart, loading: isPending, error };
 };

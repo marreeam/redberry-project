@@ -8,12 +8,12 @@ interface UpdateCartPayload {
 }
 
 export const useUpdateCart = (productId: number | string) => {
-  const { mutate, isLoading, error } = useMutationApi({
+  const { mutate, isPending, error } = useMutationApi({
     url: `/cart/products/${productId}`,
     method: "patch",
   });
 
   const updateCart = (payload: UpdateCartPayload) => mutate(payload);
 
-  return { updateCart, loading: isLoading, error };
+  return { updateCart, loading: isPending, error };
 };

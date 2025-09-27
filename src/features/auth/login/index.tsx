@@ -4,7 +4,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/component/ui/Input";
 import PrimaryButton from "@/component/ui/button";
-import { useLogin } from "@/services/authService";
+import { useLogin } from "./hook/useLogin";
 
 interface LoginFormValues {
   email: string;
@@ -56,7 +56,10 @@ const Login: React.FC = () => {
             </p>
           )}
 
-          <PrimaryButton text={loginMutation.isLoading ? "Logging in..." : "Login"} />
+    <PrimaryButton text={loginMutation.isPending ? "Logging in..." : "Login"} />
+        {loginMutation.isError && (
+    <p className="text-red-500">{(loginMutation.error as any)?.response?.data?.message || "Login failed"}</p>
+  )}
         </form>
 
         <p className="font-medium text-[14px] leading-[100%] tracking-[0%] text-center text-[#3E424A]">

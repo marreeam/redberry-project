@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/component/ui/Input";
 import PrimaryButton from "@/component/ui/button";
 import AvatarPicker from "./component/AvatarPicker";
-import { useRegister, RegisterData } from "@/services/authService";
+import { useRegister } from "./hook/useRegister";
 
 interface RegisterFormValues {
   username: string;
@@ -47,7 +47,7 @@ const Register: React.FC = () => {
           <Input {...register("password")} placeholderText="Password" required type="password" />
           <Input {...register("password_confirmation")} placeholderText="Confirm password" required type="password"/>
 
-          {registerMutation.isLoading && <p>Registering...</p>}
+          {registerMutation.isPending  && <p>Registering...</p>}
           {registerMutation.isError && (
             <p className="text-red-500 text-sm">
               {(registerMutation.error as any)?.response?.data?.message || "Registration failed"}
@@ -57,7 +57,7 @@ const Register: React.FC = () => {
             <p className="text-green-600 text-sm">Registration successful!</p>
           )}
 
-          <PrimaryButton text={registerMutation.isLoading ? "Registering..." : "Register"} />
+          <PrimaryButton text={registerMutation.isPending ? "Registering..." : "Register"} />
         </form>
       </div>
     </div>
