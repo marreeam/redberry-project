@@ -85,7 +85,8 @@ const CartModal: React.FC<CartModalProps> = ({ onClose }) => {
           <div className="w-[460px] p-10">
             <PrimaryButton
             text="Go to Checkout"
-            onClick={() => router.push("/checkout")}
+            onClick={() => { onClose();router.push("/checkout")}
+            }
           />
           </div>
           </div>
