@@ -28,7 +28,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
 
   return (
     <li key={`${item.id}-${item.color}-${item.size}`}>
-      <div className="flex gap-[17px] items-center">
+      <div className="flex gap-[17px] items-center  p-10">
         <img
           src={item.cover_image}
           alt="cover image"
@@ -47,7 +47,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
             <div className="flex justify-between">
             <div className="flex items-center border border-[#E1DFE1] px-2 py-1 rounded-[22px] w-[70px]">
               <button
-                className="text-[16px] rounded flex justify-center items-center"
+                className="text-[16px] rounded flex justify-center items-center cursor-pointer hover:text-[#FF4000]"
                 onClick={() => handleChange(quantity - 1)}
                 style={{ color: quantity === 1 ? "#E1DFE1" : "black" }}
               >
@@ -55,7 +55,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
               </button>
               <span className="text-[12px] px-4 text-center">{quantity}</span>
               <button
-                className="text-[16px] rounded flex justify-center items-center"
+                className="text-[16px] rounded flex justify-center items-center cursor-pointer hover:text-[#FF4000]"
                 onClick={() => handleChange(quantity + 1)}
               >
                 +
@@ -63,7 +63,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
             </div>
             <button
               onClick={handleRemove}
-              className="text-red-500 text-[12px] underline ml-2"
+              className=" text-[12px] ml-2 cursor-pointer hover:text-[#FF4000]"
             >
               Remove
             </button>

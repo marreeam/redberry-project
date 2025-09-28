@@ -31,20 +31,17 @@ const CartModal: React.FC<CartModalProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex">
-      {/* overlay */}
       <div className="fixed inset-0 bg-black/40" onClick={onClose} />
-
-      {/* modal */}
       <div
         className="absolute right-0 top-0 h-full w-[440px] bg-white shadow-xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center p-4 border-b">
+        <div className="flex justify-between items-center p-10 ">
           <h2 className="text-popins-20">Shopping cart ({cartItems?.length || 0})</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>
+          <button onClick={onClose} className=" hover:text-[#FF4000] text-[32px]">✕</button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto">
           {isLoading && <Loading />}
           {isError && <p className="text-red-500">{(error as any)?.message || "Failed to load cart"}</p>}
 
@@ -70,23 +67,27 @@ const CartModal: React.FC<CartModalProps> = ({ onClose }) => {
         </div>
 
         {cartItems && cartItems.length > 0 && (
-          <div className="border-t p-4 flex flex-col gap-4">
-            <div className="flex justify-between text-medium-14">
+          <div>
+          <div className="p-10 flex flex-col gap-4">
+            <div className="flex justify-between text-poppins-normal-16 text-[#3E424A]">
               <span>Items subtotal:</span>
               <span>${subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-medium-14">
+            <div className="flex justify-between text-poppins-normal-16 text-[#3E424A]">
               <span>Delivery:</span>
               <span>${deliveryCost.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between font-medium text-[16px]">
+            <div className="flex justify-between text-popins-20">
               <span>Total:</span>
               <span>${total.toFixed(2)}</span>
             </div>
+          </div>
+          <div className="w-[460px] p-10">
             <PrimaryButton
-              text="Go to Checkout"
-              onClick={() => router.push("/checkout")}
-            />
+            text="Go to Checkout"
+            onClick={() => router.push("/checkout")}
+          />
+          </div>
           </div>
         )}
       </div>
