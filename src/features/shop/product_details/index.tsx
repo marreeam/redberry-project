@@ -5,25 +5,15 @@ import { useProduct } from "@/features/shop/product_details/hook/useProduct";
 import { useParams } from "next/navigation";
 import Loading from "@/component/ui/loading";
 import ProductDetailsSection from "./component/ProductDetailsSection";
-import { useAddToCart } from "../cartModal/hook/useAddToCart";
-import { useCurrentUser } from "@/hook/useCurrentUser";
+
 const ProductDetailPage = () => {
   const params = useParams();
   const id = params?.id as string;
-  const { data: user } = useCurrentUser();
   const { data: currentProduct, isLoading, isError } = useProduct({ id });
-  const { addToCart, loading: addingToCart, error } = useAddToCart(id);
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const [selectedColor, setSelectedColor] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | undefined>();
   const [quantity, setQuantity] = useState<number>(1);
-
-  useEffect(() => {
-    if (currentProduct) {
-      console.log("Fetched product:", currentProduct); 
-    }
-  }, [currentProduct]);
-
 
   useEffect(() => {
     if (!currentProduct) return;
@@ -59,20 +49,6 @@ const ProductDetailPage = () => {
   if (isLoading) return <Loading />;
   if (isError || !currentProduct) return <p>Product not found</p>;
 
-  const handleAddToCart = () => {
-    if (!user) {
-      alert("Please log in to add items to your cart");
-      return;
-    }
-    if (!selectedColor || !selectedSize) return;
-    addToCart({
-      color: selectedColor,
-      size: selectedSize,
-      quantity,
-    });
-  };
-
-
   return (
     <div className="pr-[100px] pl-[100px] pt-[72px] flex gap-8">
       <div className="flex  gap-4">
@@ -104,10 +80,7 @@ const ProductDetailPage = () => {
         selectedSize={selectedSize}
         onSelectSize={setSelectedSize}
         quantity={quantity}
-        onSetQuantity={setQuantity}
-        onAddToCart={handleAddToCart} 
-        addingToCart={addingToCart}   
-        error={error}     
+        onSetQuantity={setQuantity} 
       />
     </div>
   );

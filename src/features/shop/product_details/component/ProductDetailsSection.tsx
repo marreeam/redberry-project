@@ -1,9 +1,12 @@
+"use client";
+
 import React from "react";
 import { Product } from "@/types/Product";
 import ColorSelector from "./ColorSelector";
 import SizeSelector from "./SizeSelector";
 import QuantitySelector from "./QuantitySelector";
 import PrimaryButton from "@/component/ui/button";
+import { useAddToCart } from "../../cartModal/hook/useAddToCart";
 
 interface ProductDetailsSectionProps {
   product: Product;
@@ -13,9 +16,6 @@ interface ProductDetailsSectionProps {
   onSelectSize: (size: string) => void;
   quantity: number;
   onSetQuantity: (quantity: number) => void;
-  onAddToCart: () => void;
-  addingToCart?: boolean;
-  error?: any;
 }
 
 const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
@@ -26,20 +26,25 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
   onSelectSize,
   quantity,
   onSetQuantity,
-  onAddToCart,
 }) => {
+  const { addToCart, loading, error } = useAddToCart(product.id);
+
+  const handleAddToCart = () => {
+    if (!selectedColor || !selectedSize) return;
+
+    addToCart({
+      color: selectedColor,
+      size: selectedSize,
+      quantity,
+    });
+  };
+
   return (
     <div className="flex flex-col gap-[56px] p-4 w-[704px]">
       <div className="flex flex-col gap-[21px]">
-      <h1 className="text-poppins-semibold-32">
-        {product.name}
-      </h1>
-      <p className="text-poppins-semibold-32 ">
-        ${product.price}
-      </p>
+        <h1 className="text-poppins-semibold-32">{product.name}</h1>
+        <p className="text-poppins-semibold-32">${product.price}</p>
       </div>
-   
-
 
       <div className="flex flex-col gap-12 mt-4">
         <ColorSelector
@@ -52,51 +57,45 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
           selectedSize={selectedSize}
           onSelectSize={onSelectSize}
         />
-           <QuantitySelector
-        quantity={quantity}
-        onSetQuantity={onSetQuantity}
-        maxQuantity={10}
-      />
+        <QuantitySelector
+          quantity={quantity}
+          onSetQuantity={onSetQuantity}
+          maxQuantity={10}
+        />
       </div>
-
 
       <PrimaryButton
-      text="Add to cart"
-        onClick={onAddToCart}
-        disabled={!selectedColor || !selectedSize}
-      >
-       
-      </PrimaryButton>
+        text={loading ? "Adding..." : "Add to cart"}
+        onClick={handleAddToCart}
+        disabled={!selectedColor || !selectedSize || loading}
+      />
 
-<hr className="text-[#E1DFE1]"/>
+      {error && <p className="text-red-500 mt-2">Failed to add to cart</p>}
 
-<div className="flex flex-col gap-[17px] ">
-  <div className="flex justify-between">
-  <h3 className="text-popins-20">Details</h3>
-  {product.brand.image && (
-          <img
-            src={product.brand.image}
-            alt={product.brand.name}
-            className="h-6 w-auto ml-2 object-contain"
-          />
-        )}
+      <hr className="text-[#E1DFE1]" />
 
-  </div>
-
-  <div className="flex flex-col  gap-[19px] text-[14px] text-[#3E424A]">
-    <div className="flex gap-2">
-        <p className="text-poppins-normal-16">Brand:</p>
-        <span className="text-poppins-normal-16">
-          {product.brand.name}
-        </span>
+      <div className="flex flex-col gap-[17px]">
+        <div className="flex justify-between">
+          <h3 className="text-popins-20">Details</h3>
+          {product.brand.image && (
+            <img
+              src={product.brand.image}
+              alt={product.brand.name}
+              className="h-6 w-auto ml-2 object-contain"
+            />
+          )}
         </div>
-        {product.description && (
-        <p className="font-normal text-[16px] leading-[150%]">{product.description}</p>
-      )}
+
+        <div className="flex flex-col gap-[19px] text-[14px] text-[#3E424A]">
+          <div className="flex gap-2">
+            <p className="text-poppins-normal-16">Brand:</p>
+            <span className="text-poppins-normal-16">{product.brand.name}</span>
+          </div>
+          {product.description && (
+            <p className="font-normal text-[16px] leading-[150%]">{product.description}</p>
+          )}
+        </div>
       </div>
-    
-   
-    </div>
     </div>
   );
 };

@@ -10,7 +10,9 @@ interface CartItemProps {
 
 const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
   const [quantity, setQuantity] = useState(item.quantity || 1);
-  const { updateCart } = useUpdateCart(item.id, refetchCart);
+  const { updateCart } = useUpdateCart(item.id, () => {
+    refetchCart(); 
+  });
   const { removeFromCart } = useRemoveFromCart(item.id, refetchCart);
 
   const handleChange = (newQuantity: number) => {
@@ -20,7 +22,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
   };
 
   const handleRemove = () => {
-    removeFromCart();
+    removeFromCart({ color: item.color, size: item.size });
     refetchCart();
   };
 
@@ -42,6 +44,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
           <p className="text-[#3E424A] text-medium-12">{item.color && <span>{item.color} </span>}</p>
           <p className="text-medium-12 text-[#3E424A]">{item.size && <span> {item.size}</span>}</p>
           <div className="flex items-center gap-2">
+            <div className="flex justify-between">
             <div className="flex items-center border border-[#E1DFE1] px-2 py-1 rounded-[22px] w-[70px]">
               <button
                 className="text-[16px] rounded flex justify-center items-center"
@@ -64,6 +67,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
             >
               Remove
             </button>
+            </div>
           </div>
         </div>
       </div>
