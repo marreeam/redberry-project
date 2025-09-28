@@ -3,19 +3,15 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useCurrentUser } from "@/hook/useCurrentUser";
-import { useCart } from "@/features/shop/cartModal/hook/useCart";
-import cartModal from "@/features/shop/cartModal";
 import CartModal from "@/features/shop/cartModal";
 
 
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname(); 
-  const isHomePage = pathname === "/";
   const isRegisterPage = pathname === "/register";
   const isLoginPage = pathname === "/login";
   const { data: user } = useCurrentUser();
-  // const { data: cart } = useCart({ enabled: !!user });
   const [mounted, setMounted] = useState(false);
   const [isCartModalOpen,setIsCartModalOpen]=useState(false);
 

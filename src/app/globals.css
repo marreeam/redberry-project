@@ -19,3 +19,9 @@
 .text-popins-20{
   @apply font-medium text-[20px] leading-[100%] tracking-[0];
 }
+.text-medium-14{
+  @apply font-medium text-[14px] leading-[100%] tracking-[0%];
+}
+.text-medium-12{
+  @apply font-normal text-[12px] leading-[100%] tracking-[0%];
+}
