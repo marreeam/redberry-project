@@ -46,13 +46,13 @@ const CartItem: React.FC<CartItemProps> = ({ item, refetchCart }) => {
           <div className="flex items-center gap-2">
             <div className="flex justify-between">
             <div className="flex items-center border border-[#E1DFE1] px-2 py-1 rounded-[22px] w-[70px]">
-              <button
-                className="text-[16px] rounded flex justify-center items-center cursor-pointer hover:text-[#FF4000]"
-                onClick={() => handleChange(quantity - 1)}
-                style={{ color: quantity === 1 ? "#E1DFE1" : "black" }}
-              >
-                -
-              </button>
+                    <button
+                    className={`text-[16px] rounded flex justify-center items-center cursor-pointer 
+                      ${quantity === 1 ? "text-[#E1DFE1]" : "text-black hover:text-[#FF4000]"}`}
+                    onClick={() => handleChange(quantity - 1)}
+                  >
+                    -
+                  </button>
               <span className="text-[12px] px-4 text-center">{quantity}</span>
               <button
                 className="text-[16px] rounded flex justify-center items-center cursor-pointer hover:text-[#FF4000]"
