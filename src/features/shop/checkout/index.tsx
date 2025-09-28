@@ -16,15 +16,7 @@ const CheckoutPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState("");
-
-  const [errors, setErrors] = useState<{
-    name?: string;
-    surname?: string;
-    email?: string;
-    address?: string;
-    zipcode?: string;
-  }>({});
-
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   const [success, setSuccess] = useState(false);
 
   if (isLoading) return <Loading />;
@@ -34,90 +26,111 @@ const CheckoutPage: React.FC = () => {
   const delivery = 5;
   const total = subtotal + delivery;
 
+  const validate = () => {
+    const errors: { [key: string]: string } = {};
+    if (!name) errors.name = "Name is required";
+    if (!surname) errors.surname = "Surname is required";
+    if (!email) {
+      errors.email = "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      errors.email = "Email is invalid";
+    }
+    if (!address) errors.address = "Address is required";
+    if (!zipcode) {
+      errors.zipcode = "Zip code is required";
+    } else if (!/^\d+$/.test(zipcode)) {
+      errors.zipcode = "Zip code must be a number";
+    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handlePay = async () => {
-    const newErrors: typeof errors = {};
-
-    if (!name) newErrors.name = "Name is required";
-    if (!surname) newErrors.surname = "Surname is required";
-    if (!email) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Invalid email";
-    if (!address) newErrors.address = "Address is required";
-    if (!zipcode) newErrors.zipcode = "Zip code is required";
-    else if (!/^\d+$/.test(zipcode)) newErrors.zipcode = "Zip code must be a number";
-
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+    if (!validate()) return;
 
     try {
-      await checkout({ name, surname, email, address, zip_code: zipcode });
+      await checkout({
+        name,
+        surname,
+        email,
+        address,
+        zip_code: zipcode,
+      });
       setSuccess(true);
-      refetch(); 
-    } catch (err: any) {
-      setErrors({ email: err?.message || "Checkout failed" });
+      refetch(); // refresh cart after checkout
+    } catch (err) {
+      setFormErrors({ general: (err as any)?.message || "Checkout failed" });
     }
   };
 
   return (
     <div className="p-10 flex gap-10">
-      <div className="flex-1 border p-6 rounded-lg shadow-md flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
+      <div className="w-[1129px] h-[635px] flex flex-col gap-6 bg-[#F8F6F7] p-6 rounded-lg">
+        <h2 className="text-2xl font-semibold mb-4">Order details</h2>
 
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="border p-2 rounded"
-        />
-        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+        <div className="flex gap-4">
+          <div className="flex flex-col">
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 rounded w-[277px] bg-white"
+            />
+            {formErrors.name && <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>}
+          </div>
+          <div className="flex flex-col">
+            <input
+              type="text"
+              placeholder="Surname"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              className="p-2 rounded w-[277px] bg-white"
+            />
+            {formErrors.surname && <p className="text-red-500 text-sm mt-1">{formErrors.surname}</p>}
+          </div>
+        </div>
 
-        <input
-          type="text"
-          placeholder="Surname"
-          value={surname}
-          onChange={(e) => setSurname(e.target.value)}
-          className="border p-2 rounded"
-        />
-        {errors.surname && <p className="text-red-500 text-sm mt-1">{errors.surname}</p>}
+        <div className="flex flex-col">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="p-2 rounded w-[578px] bg-white"
+          />
+          {formErrors.email && <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>}
+        </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded"
-        />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+        <div className="flex gap-4">
+          <div className="flex flex-col">
+            <input
+              type="text"
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="p-2 rounded w-[277px] bg-white"
+            />
+            {formErrors.address && <p className="text-red-500 text-sm mt-1">{formErrors.address}</p>}
+          </div>
+          <div className="flex flex-col">
+            <input
+              type="text"
+              placeholder="Zip code"
+              value={zipcode}
+              onChange={(e) => setZipcode(e.target.value)}
+              className="p-2 rounded w-[277px] bg-white"
+            />
+            {formErrors.zipcode && <p className="text-red-500 text-sm mt-1">{formErrors.zipcode}</p>}
+          </div>
+        </div>
 
-        <input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          className="border p-2 rounded"
-        />
-        {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
-
-        <input
-          type="text"
-          placeholder="Zipcode"
-          value={zipcode}
-          onChange={(e) => setZipcode(e.target.value)}
-          className="border p-2 rounded"
-        />
-        {errors.zipcode && <p className="text-red-500 text-sm mt-1">{errors.zipcode}</p>}
-
-        <PrimaryButton
-          text={checkoutLoading ? "Processing..." : "Pay"}
-          onClick={handlePay}
-          disabled={checkoutLoading}
-        />
+        {formErrors.general && <p className="text-red-500">{formErrors.general}</p>}
       </div>
 
-      <div className="w-[440px] border p-6 rounded-lg shadow-md flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
+      <div className="flex flex-col gap-4">
         {cartItems && cartItems.length > 0 ? (
-          <ul className="flex flex-col gap-4 max-h-[400px] overflow-y-auto">
+          <ul className="flex flex-col gap-4 max-h-[600px] overflow-y-auto">
             {cartItems.map((item) => (
               <CartItem key={`${item.id}-${item.color}-${item.size}`} item={item} refetchCart={refetch} />
             ))}
@@ -125,8 +138,8 @@ const CheckoutPage: React.FC = () => {
         ) : (
           <p>No items in cart</p>
         )}
-
-        <div className="mt-auto">
+       
+        <div className="mt-4 flex flex-col gap-[16px]">
           <div className="flex justify-between">
             <span>Items subtotal:</span>
             <span>${subtotal.toFixed(2)}</span>
@@ -140,7 +153,14 @@ const CheckoutPage: React.FC = () => {
             <span>${total.toFixed(2)}</span>
           </div>
         </div>
+        <PrimaryButton
+          text={checkoutLoading ? "Processing..." : "Pay"}
+          onClick={handlePay}
+          disabled={checkoutLoading}
+        />
       </div>
+  
+
 
       {success && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
