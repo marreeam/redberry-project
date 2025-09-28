@@ -59,8 +59,6 @@ const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
       />
       </div>
 
-   
-
 
       <PrimaryButton
       text="Add to cart"

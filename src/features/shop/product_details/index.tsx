@@ -28,10 +28,10 @@ const ProductDetailPage = () => {
   useEffect(() => {
     if (!currentProduct) return;
 
-    if (currentProduct.available_colors.length > 0) {
+    if (currentProduct.available_colors?.length > 0) {
       setSelectedColor(currentProduct.available_colors[0]);
     }
-    if (currentProduct.available_sizes.length > 0) {
+    if (currentProduct.available_sizes?.length > 0) {
       setSelectedSize(currentProduct.available_sizes[0]);
     }
 
