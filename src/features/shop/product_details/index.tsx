@@ -6,10 +6,11 @@ import { useParams } from "next/navigation";
 import Loading from "@/component/ui/loading";
 import ProductDetailsSection from "./component/ProductDetailsSection";
 import { useAddToCart } from "../cartModal/hook/useAddToCart";
+import { useCurrentUser } from "@/hook/useCurrentUser";
 const ProductDetailPage = () => {
   const params = useParams();
   const id = params?.id as string;
-
+  const { data: user } = useCurrentUser();
   const { data: currentProduct, isLoading, isError } = useProduct({ id });
   const { addToCart, loading: addingToCart, error } = useAddToCart(id);
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
@@ -59,8 +60,11 @@ const ProductDetailPage = () => {
   if (isError || !currentProduct) return <p>Product not found</p>;
 
   const handleAddToCart = () => {
+    if (!user) {
+      alert("Please log in to add items to your cart");
+      return;
+    }
     if (!selectedColor || !selectedSize) return;
-
     addToCart({
       color: selectedColor,
       size: selectedSize,

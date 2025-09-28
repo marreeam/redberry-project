@@ -1,8 +1,6 @@
-"use client";
 import { useQueryApi } from "@/hook/useQueryApi";
+import { Product } from "@/types/Product";
 
 export const useCart = () => {
-  return useQueryApi<{ items: any[] }>({
-    url: "/cart/products",
-  });
+  return useQueryApi<Product[]>({ url: "/cart" }); 
 };

@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useCurrentUser } from "@/hook/useCurrentUser";
+import { useCart } from "@/features/shop/cartModal/hook/useCart";
+import cartModal from "@/features/shop/cartModal";
+import CartModal from "@/features/shop/cartModal";
 
 
 const Header = () => {
@@ -12,8 +15,19 @@ const Header = () => {
   const isRegisterPage = pathname === "/register";
   const isLoginPage = pathname === "/login";
   const { data: user } = useCurrentUser();
+  // const { data: cart } = useCart({ enabled: !!user });
   const [mounted, setMounted] = useState(false);
+  const [isCartModalOpen,setIsCartModalOpen]=useState(false);
 
+  const handleCartClick = () => {
+    if (!user) {
+      alert("Please log in to view your cart");
+      router.push("/login");
+      return;
+    }
+    setIsCartModalOpen(true);
+  }
+    
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -39,61 +53,66 @@ const Header = () => {
       </div>
 
       <div className="flex items-center space-x-4">
-        {isHomePage ? (
-          <div className="flex items-center gap-5">
-            <img
-              src="/img/shopping-cart.png"
-              alt="Shopping Cart"
-              className="w-6 h-6 cursor-pointer"
-            />
-
-            <div
-              className="w-10 h-10 rounded-full cursor-pointer overflow-hidden"
-              onClick={handleProfileClick}
-            >
-{mounted && user?.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt="User Avatar"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <img
-                  src="/svg/user.svg"
-                  alt="Default User"
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </div>
-          </div>
-        ) : (
+         
+ 
           <div className="flex items-center gap-2">
-            <img
-              src="/svg/user.svg"
-              alt="User Icon"
-              className="w-5 h-5 cursor-pointer"
-            />
 
-            {isRegisterPage && (
+
+            {isRegisterPage? (
               <button
                 onClick={() => router.push("/login")}
                 className="font-poppins font-medium text-[12px] leading-[100%] tracking-[0%]"
               >
                 Login
               </button>
-            )}
-
-            {isLoginPage && (
-              <button
-                onClick={() => router.push("/register")}
-                className="font-poppins font-medium text-[12px] leading-[100%] tracking-[0%]"
-              >
-                Register
-              </button>
+            )
+          :
+          isLoginPage? (
+            <button
+              onClick={() => router.push("/register")}
+              className="font-poppins font-medium text-[12px] leading-[100%] tracking-[0%]"
+            >
+              Register
+            </button>
+          )
+          :
+          <div className="flex items-center gap-5">
+          <img
+            src="/img/shopping-cart.png"
+            alt="Shopping Cart"
+            className="w-6 h-6 cursor-pointer"
+            onClick={handleCartClick}
+          />
+          <div
+            className="w-10 h-10 rounded-full cursor-pointer overflow-hidden"
+            onClick={handleProfileClick}
+          >
+{mounted && user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt="User Avatar"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src="/svg/user.svg"
+                alt="Default User"
+                className="w-full h-full object-cover"
+              />
             )}
           </div>
-        )}
+        </div>
+          }
+
+          </div>
+      
       </div>
+      {
+      isCartModalOpen && 
+         <CartModal onClose={()=>{setIsCartModalOpen(false)}}/>
+        }
+      
+
     </header>
   );
 };

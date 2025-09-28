@@ -14,6 +14,8 @@ interface ProductDetailsSectionProps {
   quantity: number;
   onSetQuantity: (quantity: number) => void;
   onAddToCart: () => void;
+  addingToCart?: boolean;
+  error?: any;
 }
 
 const ProductDetailsSection: React.FC<ProductDetailsSectionProps> = ({
