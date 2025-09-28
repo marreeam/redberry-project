@@ -1,6 +1,6 @@
 "use client";
-
 import { useMutationApi } from "@/hook/useMutationApi";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AddToCartPayload {
   quantity: number;
@@ -9,14 +9,23 @@ interface AddToCartPayload {
 }
 
 export const useAddToCart = (productId: number | string) => {
-  const { mutate, isPending , error } = useMutationApi({
+  const queryClient = useQueryClient();
+
+  const mutation = useMutationApi({
     url: `/cart/products/${productId}`,
     method: "post",
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/cart/products"] });
+      
+    },
+    onError: (error) => {
+      console.error("Add to cart failed:", error);
+    },
   });
 
-  const addToCart = async (payload: AddToCartPayload) => {
-    return mutate(payload);
+  return {
+    addToCart: (payload: AddToCartPayload) => mutation.mutate(payload),
+    loading: mutation.isPending,
+    error: mutation.error,
   };
-
-  return { addToCart, loading: isPending, error };
 };

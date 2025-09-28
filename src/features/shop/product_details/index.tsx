@@ -5,13 +5,13 @@ import { useProduct } from "@/features/shop/product_details/hook/useProduct";
 import { useParams } from "next/navigation";
 import Loading from "@/component/ui/loading";
 import ProductDetailsSection from "./component/ProductDetailsSection";
-
+import { useAddToCart } from "../cartModal/hook/useAddToCart";
 const ProductDetailPage = () => {
   const params = useParams();
   const id = params?.id as string;
 
   const { data: currentProduct, isLoading, isError } = useProduct({ id });
-
+  const { addToCart, loading: addingToCart, error } = useAddToCart(id);
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const [selectedColor, setSelectedColor] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | undefined>();
@@ -59,8 +59,9 @@ const ProductDetailPage = () => {
   if (isError || !currentProduct) return <p>Product not found</p>;
 
   const handleAddToCart = () => {
-    console.log({
-      productId: id,
+    if (!selectedColor || !selectedSize) return;
+
+    addToCart({
       color: selectedColor,
       size: selectedSize,
       quantity,
@@ -100,7 +101,9 @@ const ProductDetailPage = () => {
         onSelectSize={setSelectedSize}
         quantity={quantity}
         onSetQuantity={setQuantity}
-        onAddToCart={handleAddToCart}
+        onAddToCart={handleAddToCart} 
+        addingToCart={addingToCart}   
+        error={error}     
       />
     </div>
   );
