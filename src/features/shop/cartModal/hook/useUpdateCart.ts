@@ -7,10 +7,13 @@ interface UpdateCartPayload {
   size?: string;
 }
 
-export const useUpdateCart = (productId: number | string) => {
-  const { mutate, isPending, error } = useMutationApi({
+export const useUpdateCart = (productId: number | string, onSuccess?: () => void) => {
+  const { mutate, isPending, error } = useMutationApi<UpdateCartPayload>({
     url: `/cart/products/${productId}`,
     method: "patch",
+    onSuccess: () => {
+      if (onSuccess) onSuccess(); 
+    },
   });
 
   const updateCart = (payload: UpdateCartPayload) => mutate(payload);
