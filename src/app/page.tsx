@@ -22,7 +22,7 @@ const ProductsPage = () => {
   if (isError) return <p>Error loading products</p>;
 
   const products = data?.data || [];
-  const { current_page, last_page, total, per_page } = data.meta;
+  const { current_page = 1, last_page = 1, total = 0, per_page = 10 } = data?.meta || {};
   const startIndex = (current_page - 1) * per_page + 1;
   const endIndex = Math.min(current_page * per_page, total);
 

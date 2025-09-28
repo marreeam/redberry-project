@@ -22,7 +22,8 @@ const CheckoutPage: React.FC = () => {
   if (isLoading) return <Loading />;
   if (isError) return <p className="text-red-500">{(error as any)?.message || "Failed to load cart"}</p>;
 
-  const subtotal = cartItems?.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
+  const subtotal = cartItems?.reduce((acc, item) => acc + item.price * (item.quantity || 0), 0) || 0;
+
   const delivery = 5;
   const total = subtotal + delivery;
 
